@@ -1,9 +1,22 @@
-name: Deploy to GitHub Pages
+name: quasar-pwa-build
+run-name: Quasar build PWA
 
 on:
   push:
     branches:
-      - master # Thay 'master' bằng tên nhánh của bạn nếu cần
+      - "main" # Thay 'master' bằng tên nhánh của bạn nếu cần
+
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
+
+# Add write workflow permissions
+permissions:
+  contents: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
@@ -16,7 +29,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16" # Hoặc phiên bản Node.js mà bạn đang sử dụng
+          node-version: "20" # Hoặc phiên bản Node.js mà bạn đang sử dụng
 
       - name: Install dependencies
         run: npm ci
